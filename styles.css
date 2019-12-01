@@ -1,0 +1,46 @@
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+}
+
+#calc-container {
+  display: flex;
+  justify-content: center;
+}
+
+#clear {
+  border-radius: 12px;
+  width: 200px;
+  height: 60px;
+  font-size: 24px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#equals {
+  border-radius: 12px;
+  width: 200px;
+  height: 60px;
+  font-size: 24px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.button {
+  display: flex;
+  border-radius: 12px;
+  width: 100px;
+  height: 60px;
+  justify-content: center;
+  font-size: 24px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#calc-screen {
+  width: 410px;
+  height: 60px;
+  border: 5px solid gray;
+  border-radius: 12px;
+  margin-left: 326px;
+}
