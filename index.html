@@ -9,40 +9,39 @@
 </head>
 <body>
   <h1>Let's Do Some Maths!</h1>
-    <div id="calc-screen"></div>
-    <div id='calc-container'>    
-      <table>
-        <tr>
-          <td colspan='2'><button type='button' id='clear' class='operator' name='clear'>Clear</button></td>
-          <td><button type='button' class='button' class='operator' name='negative'>+/-</button></td>
-          <td><button type='backspace' class='button' class='operator' name='add'>+</button></td>
-        </tr>
-        <tr>
-          <td><button type='button' class='button' class='number' name='seven' value='7'>7</button></td>
-          <td><button type='button' class='button' class='number' name='eight' value='8'>8</button></td>
-          <td><button type='button' class='button' class='number' name='nine' value='9'>9</button></td>
-          <td><button type='button' class='button' class='operator' name='subtract'>-</button></td>
-        </tr>
-        <tr>
-          <td><button type='button' class='button' class='number' name='four' value='4'>4</button></td>
-          <td><button type='button' class='button' class='number' name='five' value='5'>5</button></td>
-          <td><button type='button' class='button' class='number' name='six' value='6'>6</button></td>
-          <td><button type='button' class='button' class='operator' name='multiply'>x</button></td>
-        </tr>
-        <tr>
-          <td><button type='button' class='button' class='number' name='one' value='1'>1</button></td>
-          <td><button type='button' class='button' class='number' name='two' value='2'>2</button></td>
-          <td><button type='button' class='button' class='number' name='three' value='3'>3</button></td>
-          <td><button type='button' class='button' class='operator' name='divide'>/</button></td>
-        </tr>
-        <tr>
-          <td><button type='button' class='button' class='decimal' name='decimal'>.</button></td>
-          <td><button type='button' class='button' class='number' name='zero' value='0'>0</button></td>
-          <td colspan='2'><button type='button' id='equals' class='operator' name='equals'>=</button></td>
-        </tr>
-      </table>
+  
+  <div id="calc-container">
+    <div id="calc-screen" class="row"></div>
+    <div class="row">
+      <button id="clear" class="button" name="clear" value="">Clear</button>
+      <button class="button operator" name="negative">+/-</button>
+      <button class="button operator" name="add" value="+">+</button>
     </div>
+    <div class="row">
+      <button class="button number" name="seven" value="7">7</button>
+      <button class="button number" name="eight" value="8">8</button>
+      <button class="button number" name="nine" value="9">9</button>
+      <button class="button operator" name="subtract" value="-">-</button>
+    </div>
+    <div class="row">
+      <button class="button number" name="four" value="4">4</button>
+      <button class="button number" name="five" value="5">5</button>
+      <button class="button number" name="six" value="6">6</button>
+      <button class="button operator" name="multiply" value="*">x</button>
+    </div>
+    <div class="row">
+      <button class="button number" name="one" value="1">1</button>
+      <button class="button number" name="two" value="2">2</button>
+      <button class="button number" name="three" value="3">3</button>
+      <button class="button operator" name="divide" value="/">/</button>
+    </div>
+    <div class="row">
+      <button class="button decimal" name="decimal" value=".">.</button>
+      <button class="button number" name="zero" value="0">0</button>
+      <button id="equals" class="button" name="equals">=</button>
+    </div>
+  </div>
 
-<script src="script.js"></script>  
+  <script src="script.js"></script>  
 </body>
 </html>
