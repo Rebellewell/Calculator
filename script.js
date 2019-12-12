@@ -4,8 +4,12 @@ var number = document.getElementsByClassName('number');
 var operator = document.getElementsByClassName('operator');
 var decimal = document.getElementsByClassName('decimal');
 var flags = {
-  canDec: true
+  canDec: true,
+  freshEval: false
 };
+var currNum = '';
+var currOp = '';
+var expression = [];
 
 calcContainer.addEventListener('click', buttonHandler);
 
@@ -44,42 +48,82 @@ function keyHandler(event) {
 }
 
 function handleNumber(number) {
-  addToScreen(number);
+  if(currOp) {
+    expression.push(currOp);
+    currOp = '';
+  }
+  if(flags.freshEval) {
+    clearScreen();
+    flags.freshEval = false;
+    expression = [];
+    addToScreen(number);
+    currNum = number;
+  } else if(calcScreen.innerText === '0') {
+    setScreen(number);
+    currNum = number;
+  } else {
+    addToScreen(number);
+    currNum += number;
+  }
 }
 
 function handleOperator(operator) {
+  if(currNum) {
+    expression.push(currNum);
+    currNum = '';
+  } 
   if(endsWithOp(calcScreen.innerText)) {
     // replace screen with same as before, just with the last operator replaced with this new one
     var original = calcScreen.innerText.slice(0, -1);
     setScreen(original + operator);
-  } else {
-    // just add operator to end of screen
+  } else if(canOp()) {
     addToScreen(operator);
+    flags.canDec = true;
+    flags.freshEval = false;
   }
-  flags.canDec = true;
+  currOp = operator;
 }
 
 function handleDecimal(decimal) {
-  if(flags.canDec) {
-    addToScreen('.');
-    flags.canDec = false;
+  if(flags.freshEval) {
+    clearScreen();
   }
+  addToScreen('.');
+  flags.canDec = false;
+  flags.freshEval = false;
+  currNum += '.';
 }
 
 function handleNeg() {
-  var currNum = calcScreen.slice(-1);
-  var negNum = calcScreen.replace(currNum, '-' + currNum);
-  addToScreen(negNum);
+  numLength = currNum.length;
+  var newNum = currNum.slice(-1, numLength + 1);
+  setScreen('-' + newNum);
 }
 
 function handleCalc() {
-  var result = eval(calcScreen.innerText);
+  if(currNum) {
+    expression.push(currNum);
+    currNum ='';
+  }
+  if(calcScreen.innerText === '') {
+    return setScreen(0);
+  }
+  for(var i = 0; i < expression.length; i += 2) {
+    if(+expression[i] < 0) {
+      expression[i] = '(' + expression[i] + ')';
+    }
+  }
+  var expressionStr = expression.join('');
+  var result = eval(expressionStr);
   setScreen(result);
+  expression = [result];
+  flags.freshEval = true;
+  flags.canDec = true;
 }
 
 function clearScreen() {
-  calcScreen.innerText = '';
-  flags.canDec = true;
+    calcScreen.innerText = '';
+    flags.canDec = true;
 }
 
 function addToScreen(content) {
@@ -96,11 +140,11 @@ function endsWithOp () {
   return ['+', '-', '*', '/'].includes(lastChar);
 }
 
-
-
-// // go to the DOM and get the current value of the screen element
-// function getScreen() {}
-// // take a string "content" and update the screen element in the DOM to hold the value of "content" at the end of its current value
-// function addToScreen(content) {}
-// // replace the value of the screen element in the DOM with whatever is in "content"
-// function setScreen(content) {}
+// Cannot use operator on empty screen
+function canOp() {
+  if(calcScreen.innerText === '' || calcScreen.innerText === '.') {
+    return false;
+  } else {
+    return true;
+  }
+}
