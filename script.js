@@ -52,6 +52,7 @@ function handleNumber(number) {
   if(currOp) {
     expression.push(currOp);
     currOp = '';
+    canDec = true;
   }
   if(flags.freshEval) {
     clearScreen();
@@ -69,7 +70,7 @@ function handleNumber(number) {
 }
 
 function handleOperator(operator) {
-  if(currNum) {
+  if(currNum && currNum !== '.') {
     expression.push(currNum);
     currNum = '';
   } 
@@ -77,12 +78,13 @@ function handleOperator(operator) {
     // replace screen with same as before, just with the last operator replaced with this new one
     var original = calcScreen.innerText.slice(0, -1);
     setScreen(original + operator);
+    currOp = operator;
   } else if(canOp()) {
     addToScreen(operator);
     flags.canDec = true;
     flags.freshEval = false;
+    currOp = operator;
   }
-  currOp = operator;
 }
 
 function handleDecimal(decimal) {
@@ -117,6 +119,9 @@ function handleCalc() {
     currNum ='';
   }
   if(calcScreen.innerText === '') {
+    currOpp = '';
+    expression = [];
+    currNum = '0';
     return setScreen(0);
   }
   for(var i = 0; i < expression.length; i += 2) {
@@ -155,9 +160,9 @@ function endsWithOp () {
   return ['+', '-', '*', '/'].includes(lastChar);
 }
 
-// Cannot use operator on empty screen
+// Cannot use operator on empty screen or with just a decimal
 function canOp() {
-  if(calcScreen.innerText === '' || calcScreen.innerText === '.') {
+  if(calcScreen.innerText === '' || currNum === '.') {
     return false;
   } else {
     return true;
